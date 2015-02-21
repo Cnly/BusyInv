@@ -1,5 +1,6 @@
 package io.github.Cnly.BusyInv.BusyInv.menus;
 
+import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
 import io.github.Cnly.BusyInv.BusyInv.holders.BusyHolder;
 import io.github.Cnly.BusyInv.BusyInv.items.AbstractBusyItem;
@@ -28,7 +29,7 @@ public class BusyMenu implements IBusyMenu
     
     protected InventoryType inventoryType;
     protected String title;
-    protected IBusyMenu parent;
+    protected IOpenable parent;
     protected int size;
     protected AbstractBusyItem[] items;
     
@@ -47,7 +48,7 @@ public class BusyMenu implements IBusyMenu
      * @param parent
      *            The parent window. Can be null.
      */
-    public BusyMenu(InventoryType inventoryType, String title, IBusyMenu parent)
+    public BusyMenu(InventoryType inventoryType, String title, IOpenable parent)
     {
         super();
         this.inventoryType = inventoryType;
@@ -70,7 +71,7 @@ public class BusyMenu implements IBusyMenu
      *            The inventory's size
      */
     public BusyMenu(InventoryType inventoryType, String title,
-            IBusyMenu parent, int size)
+            IOpenable parent, int size)
     {
         super();
         this.inventoryType = inventoryType;
@@ -105,7 +106,7 @@ public class BusyMenu implements IBusyMenu
         
         if(ice.willOpenParent())
         {
-            IBusyMenu parentMenu = this.openParentFor(p);
+            IOpenable parentMenu = this.openParentFor(p);
             if(null == parentMenu && ice.willCloseOnNoParent())
                 p.closeInventory();
             return;
@@ -242,7 +243,7 @@ public class BusyMenu implements IBusyMenu
     }
     
     @Override
-    public IBusyMenu openParentFor(Player p)
+    public IOpenable openParentFor(Player p)
     {
         if(null == this.parent)
             return null;
@@ -250,12 +251,12 @@ public class BusyMenu implements IBusyMenu
     }
     
     @Override
-    public IBusyMenu getParent()
+    public IOpenable getParent()
     {
         return parent;
     }
     
-    public BusyMenu setParent(IBusyMenu parent)
+    public IOpenable setParent(IOpenable parent)
     {
         this.parent = parent;
         return this;

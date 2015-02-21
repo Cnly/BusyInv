@@ -1,8 +1,8 @@
 package io.github.Cnly.BusyInv.BusyInv.menus;
 
+import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.holders.BusyHolder;
 import io.github.Cnly.BusyInv.BusyInv.items.AbstractBusyItem;
-import io.github.Cnly.BusyInv.BusyInv.menus.apis.IBusyMenu;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -12,12 +12,12 @@ import org.bukkit.inventory.Inventory;
 public class ChestMenu extends BusyMenu
 {
     
-    public ChestMenu(String title, IBusyMenu parent, int size)
+    public ChestMenu(String title, IOpenable parent, int size)
     {
         super(InventoryType.CHEST, title, parent, getVerifiedSize(size));
     }
     
-    public ChestMenu(String title, IBusyMenu parent, ChestSize size)
+    public ChestMenu(String title, IOpenable parent, ChestSize size)
     {
         super(InventoryType.CHEST, title, parent, size.getValue());
     }

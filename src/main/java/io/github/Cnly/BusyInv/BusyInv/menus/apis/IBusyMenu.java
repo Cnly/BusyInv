@@ -1,5 +1,7 @@
 package io.github.Cnly.BusyInv.BusyInv.menus.apis;
 
+import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
+import io.github.Cnly.BusyInv.BusyInv.apis.IParented;
 import io.github.Cnly.BusyInv.BusyInv.items.AbstractBusyItem;
 
 import org.bukkit.entity.Player;
@@ -7,7 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
-public interface IBusyMenu
+public interface IBusyMenu extends IOpenable, IParented
 {
     
     public void onMenuClick(InventoryClickEvent e);
@@ -24,15 +26,6 @@ public interface IBusyMenu
      * @return this
      */
     public IBusyMenu setItem(int index, AbstractBusyItem item);
-    
-    /**
-     * Opens this menu for a player.
-     * 
-     * @param p
-     *            The player
-     * @return this
-     */
-    public IBusyMenu openFor(Player p);
     
     /**
      * Forces this menu to apply its items on an inventory. If you want to
@@ -67,16 +60,6 @@ public interface IBusyMenu
     public boolean updateFor(Player p);
     
     /**
-     * Checks if THIS menu instance was opened for the specified player.
-     * 
-     * @param p
-     *            The player to check
-     * @return true if and only if this menu instance was opened for the
-     *         specified player. Otherwise false.
-     */
-    public boolean isOpenFor(Player p);
-    
-    /**
      * Fills all empty slots with the given item.
      * 
      * @param item
@@ -85,20 +68,7 @@ public interface IBusyMenu
      */
     public IBusyMenu fillEmptySlots(AbstractBusyItem item);
     
-    /**
-     * Gets the parent menu. Can be null if there isn't one.
-     * 
-     * @return The parent
-     */
-    public IBusyMenu getParent();
-    
-    /**
-     * Opens the parent menu if there is one.
-     * 
-     * @param p
-     *            The player
-     * @return The parent menu if there is one; or null if there isn't one.
-     */
-    public IBusyMenu openParentFor(Player p);
+    @Override
+    public IBusyMenu openFor(Player p);
     
 }

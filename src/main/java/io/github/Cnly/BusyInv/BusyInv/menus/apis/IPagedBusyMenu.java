@@ -79,7 +79,7 @@ public interface IPagedBusyMenu extends IBusyMenu
      *            The item
      * @return this
      */
-    public IPagedBusyMenu fillEmpty(int naturalPage, AbstractBusyItem item);
+    public IPagedBusyMenu fillEmptySlots(int naturalPage, AbstractBusyItem item);
     
     /**
      * Opens the first page of this menu for a player.

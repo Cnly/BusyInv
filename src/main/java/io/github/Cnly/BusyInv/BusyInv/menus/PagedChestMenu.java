@@ -7,6 +7,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 
+import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
 import io.github.Cnly.BusyInv.BusyInv.holders.PagedBusyHolder;
 import io.github.Cnly.BusyInv.BusyInv.items.AbstractBusyItem;
@@ -22,13 +23,13 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
     protected int perPageLineCount;
     protected int pages;
     
-    public PagedChestMenu(String title, IBusyMenu parent,
+    public PagedChestMenu(String title, IOpenable parent,
             ChestSize perPageSize, int pages)
     {
         this(title, parent, perPageSize.getValue(), pages);
     }
     
-    public PagedChestMenu(String title, IBusyMenu parent, int perPageSize,
+    public PagedChestMenu(String title, IOpenable parent, int perPageSize,
             int pages)
     {
         super(title, parent, perPageSize * pages);
@@ -73,8 +74,8 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
         
         if(ice.willOpenParent())
         {
-            IBusyMenu parentMenu = this.openParentFor(p);
-            if(null == parentMenu && ice.willCloseOnNoParent())
+            IOpenable parentWindow = this.openParentFor(p);
+            if(null == parentWindow && ice.willCloseOnNoParent())
                 p.closeInventory();
             return;
         }
@@ -138,17 +139,17 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
         return this;
     }
     
-    public PagedChestMenu fillEmpty(int naturalPage)
+    public PagedChestMenu fillEmptySlots(int naturalPage)
     {
-        this.fillEmpty(naturalPage, this.emptyItem);
+        this.fillEmptySlots(naturalPage, this.emptyItem);
         return this;
     }
     
     @Override
-    public PagedChestMenu fillEmpty(int naturalPage, AbstractBusyItem item)
+    public PagedChestMenu fillEmptySlots(int naturalPage, AbstractBusyItem item)
     {
         int itemStart = this.getItemStart(naturalPage);
-        int itemEnd = itemStart + ITEMS_PER_LINE;
+        int itemEnd = itemStart + this.perPageSize;
         for(int i = itemStart; i < itemEnd; i++)
             if(null == this.items[i])
                 this.items[i] = item;
