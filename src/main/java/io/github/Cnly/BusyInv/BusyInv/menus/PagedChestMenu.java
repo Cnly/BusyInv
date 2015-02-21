@@ -57,9 +57,9 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
         int rawSlot = e.getRawSlot();
         if(rawSlot < 0 || rawSlot >= this.perPageSize)
             return;
-        
-        AbstractBusyItem bi = this.items[((currentNaturalPage - 1) * this.perPageSize)
-                + rawSlot];
+        int itemSlot = ((currentNaturalPage - 1) * this.perPageSize)
+                + rawSlot;
+        AbstractBusyItem bi = this.items[itemSlot];
         if(null == bi)
             return;
         ItemClickEvent ice = new ItemClickEvent(p, this, e.getClick(),
@@ -68,7 +68,11 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
         
         if(ice.willCloseDirectly())
         {
-            p.closeInventory();
+            // The following is a magic
+            if(rawSlot <= 44)
+                p.closeInventory();
+            else
+                this.closeInventorySafely(p);
             return;
         }
         
@@ -76,7 +80,11 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
         {
             IOpenable parentWindow = this.openParentFor(p);
             if(null == parentWindow && ice.willCloseOnNoParent())
-                p.closeInventory();
+                // The following is a magic
+                if(rawSlot <= 44)
+                    p.closeInventory();
+                else
+                    this.closeInventorySafely(p);
             return;
         }
         

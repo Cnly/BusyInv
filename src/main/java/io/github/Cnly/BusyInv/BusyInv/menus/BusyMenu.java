@@ -1,5 +1,6 @@
 package io.github.Cnly.BusyInv.BusyInv.menus;
 
+import io.github.Cnly.BusyInv.BusyInv.BusyInv;
 import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
 import io.github.Cnly.BusyInv.BusyInv.holders.BusyHolder;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class BusyMenu implements IBusyMenu
 {
@@ -100,7 +102,11 @@ public class BusyMenu implements IBusyMenu
         
         if(ice.willCloseDirectly())
         {
-            p.closeInventory();
+            // The following is a magic
+            if(rawSlot <= 44)
+                p.closeInventory();
+            else
+                this.closeInventorySafely(p);
             return;
         }
         
@@ -108,7 +114,11 @@ public class BusyMenu implements IBusyMenu
         {
             IOpenable parentMenu = this.openParentFor(p);
             if(null == parentMenu && ice.willCloseOnNoParent())
-                p.closeInventory();
+                // The following is a magic
+                if(rawSlot <= 44)
+                    p.closeInventory();
+                else
+                    this.closeInventorySafely(p);
             return;
         }
         
@@ -295,6 +305,18 @@ public class BusyMenu implements IBusyMenu
             throw new IllegalArgumentException("items.length != this.size");
         this.items = items;
         return this;
+    }
+    
+    protected void closeInventorySafely(final Player p)
+    {
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                p.closeInventory();
+            }
+        }.runTask(BusyInv.getInstance());
     }
     
 }
