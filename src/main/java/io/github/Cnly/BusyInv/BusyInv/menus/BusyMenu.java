@@ -243,6 +243,7 @@ public class BusyMenu implements IBusyMenu
         return parent;
     }
     
+    @Override
     public IOpenable setParent(IOpenable parent)
     {
         this.parent = parent;

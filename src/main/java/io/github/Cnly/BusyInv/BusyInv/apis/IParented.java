@@ -13,6 +13,15 @@ public interface IParented
     public IOpenable getParent();
     
     /**
+     * Sets the parent window.
+     * 
+     * @param parent
+     *            The parent
+     * @return this
+     */
+    public IOpenable setParent(IOpenable parent);
+    
+    /**
      * Opens the parent window if there is one.
      * 
      * @param p
