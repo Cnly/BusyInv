@@ -185,34 +185,6 @@ public class BusyMenu implements IBusyMenu
         return this;
     }
     
-    /**
-     * If a BusyMenu is opened for the target player, this method will reload
-     * the menu for the player.
-     * 
-     * @see {@link IBusyMenu#reload}
-     * 
-     * @param p
-     *            Target player
-     * @return true if and only if the menu is reloaded. Otherwise false(for
-     *         example the player didn't open an inventory or the inventory
-     *         isn't a menu)
-     */
-    public static boolean reloadFor(Player p)
-    {
-        InventoryView iview = p.getOpenInventory();
-        if(null == iview)
-            return false;
-        Inventory inv = iview.getTopInventory();
-        if(null == inv)
-            return false;
-        InventoryHolder holder = inv.getHolder();
-        if(!(holder instanceof BusyHolder))
-            return false;
-        ((BusyHolder)holder).getMenu().updateFor(p);
-        p.updateInventory();
-        return true;
-    }
-    
     @Override
     public boolean updateFor(Player p)
     {
@@ -242,6 +214,19 @@ public class BusyMenu implements IBusyMenu
         if(!menu.equals(this))
             return false;
         return true;
+    }
+    
+    @Override
+    public BusyHolder getHolderFor(Player p)
+    {
+        if(!this.isOpenFor(p))
+            return null;
+        else
+        {
+            Inventory inv = p.getOpenInventory().getTopInventory();
+            BusyHolder holder = (BusyHolder)inv.getHolder();
+            return holder;
+        }
     }
     
     @Override
@@ -309,6 +294,34 @@ public class BusyMenu implements IBusyMenu
                 p.closeInventory();
             }
         }.runTask(BusyInv.getInstance());
+    }
+    
+    /**
+     * If a BusyMenu is opened for the target player, this method will reload
+     * the menu for the player.
+     * 
+     * @see {@link IBusyMenu#reload}
+     * 
+     * @param p
+     *            Target player
+     * @return true if and only if the menu is reloaded. Otherwise false(for
+     *         example the player didn't open an inventory or the inventory
+     *         isn't a menu)
+     */
+    public static boolean reloadFor(Player p)
+    {
+        InventoryView iview = p.getOpenInventory();
+        if(null == iview)
+            return false;
+        Inventory inv = iview.getTopInventory();
+        if(null == inv)
+            return false;
+        InventoryHolder holder = inv.getHolder();
+        if(!(holder instanceof BusyHolder))
+            return false;
+        ((BusyHolder)holder).getMenu().updateFor(p);
+        p.updateInventory();
+        return true;
     }
     
 }

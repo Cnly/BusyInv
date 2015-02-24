@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.InventoryView;
 
 import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
@@ -47,6 +46,23 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
     }
     
     @Override
+    public int getOpenPageFor(Player p) throws IllegalStateException
+    {
+        PagedBusyHolder holder = this.getHolderFor(p);
+        if(null == holder)
+            throw new IllegalStateException(String.format(
+                    "This menu isn't open for player '%s'!", p.getName()));
+        else
+            return holder.getCurrentNaturalPage();
+    }
+    
+    @Override
+    public PagedBusyHolder getHolderFor(Player p)
+    {
+        return (PagedBusyHolder)super.getHolderFor(p);
+    }
+    
+    @Override
     public void onMenuClick(InventoryClickEvent e)
     {
         
@@ -57,8 +73,7 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
         int rawSlot = e.getRawSlot();
         if(rawSlot < 0 || rawSlot >= this.perPageSize)
             return;
-        int itemSlot = ((currentNaturalPage - 1) * this.perPageSize)
-                + rawSlot;
+        int itemSlot = ((currentNaturalPage - 1) * this.perPageSize) + rawSlot;
         BusyItem bi = this.items[itemSlot];
         if(null == bi)
             return;
@@ -96,8 +111,7 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
     }
     
     @Override
-    public PagedChestMenu setItem(int naturalPage, int index,
-            BusyItem item)
+    public PagedChestMenu setItem(int naturalPage, int index, BusyItem item)
     {
         this.setItem(getItemStart(naturalPage) + index, item);
         return this;
@@ -122,7 +136,10 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
     @Override
     public PagedChestMenu applyOn(Player p, Inventory inv)
     {
-        return this.applyOn(p, inv, 1);
+        if(this.isOpenFor(p))
+            return this.applyOn(p, inv, this.getOpenPageFor(p));
+        else
+            return this.applyOn(p, inv, 1);
     }
     
     @Override
@@ -167,18 +184,11 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
     @Override
     public boolean updateFor(Player p, int naturalPage)
     {
-        InventoryView iview = p.getOpenInventory();
-        if(null == iview)
+        if(!this.isOpenFor(p))
             return false;
-        Inventory inv = iview.getTopInventory();
-        if(null == inv)
-            return false;
+        Inventory inv = p.getOpenInventory().getTopInventory();
         InventoryHolder holder = inv.getHolder();
-        if(!(holder instanceof PagedBusyHolder))
-            return false;
         IBusyMenu menu = ((PagedBusyHolder)holder).getMenu();
-        if(!menu.equals(this))
-            return false;
         ((PagedChestMenu)menu).applyOn(p, inv, naturalPage);
         p.updateInventory();
         return true;

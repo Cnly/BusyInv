@@ -2,6 +2,7 @@ package io.github.Cnly.BusyInv.BusyInv.menus.apis;
 
 import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.apis.IParented;
+import io.github.Cnly.BusyInv.BusyInv.holders.BusyHolder;
 import io.github.Cnly.BusyInv.BusyInv.items.BusyItem;
 
 import org.bukkit.entity.Player;
@@ -15,6 +16,16 @@ public interface IBusyMenu extends IOpenable, IParented
     public void onMenuClick(InventoryClickEvent e);
     
     public void onMenuClose(InventoryCloseEvent e);
+    
+    /**
+     * Gets the BusyHolder of the BusyMenu open for the player.
+     * 
+     * @param p
+     *            The player
+     * @return the BusyHolder, or null when this menu isn't open for that
+     *         player.
+     */
+    public BusyHolder getHolderFor(Player p);
     
     /**
      * Sets the item at the given position. Usually starts from 0.
@@ -35,8 +46,7 @@ public interface IBusyMenu extends IOpenable, IParented
      * @see {@link IBusyMenu#updateFor(Player)}
      * 
      * @param p
-     *            The Player used for
-     *            {@link BusyItem#getLookFor(Player)}
+     *            The Player used for {@link BusyItem#getLookFor(Player)}
      * @param inv
      *            The inventory
      * @return this

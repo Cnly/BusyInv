@@ -1,5 +1,6 @@
 package io.github.Cnly.BusyInv.BusyInv.menus.apis;
 
+import io.github.Cnly.BusyInv.BusyInv.holders.PagedBusyHolder;
 import io.github.Cnly.BusyInv.BusyInv.items.BusyItem;
 
 import org.bukkit.entity.Player;
@@ -20,6 +21,21 @@ public interface IPagedBusyMenu extends IBusyMenu
     public IPagedBusyMenu openFor(Player p, int naturalPage);
     
     /**
+     * Get the current page open for the player. If this menu isn't open for the
+     * player, this method throws an {@code IllegalStateException}.
+     * 
+     * @param p
+     *            The player
+     * @return The page open for the player
+     * @throws IllegalStateException
+     *             when this menu isn't open for the player
+     */
+    public int getOpenPageFor(Player p) throws IllegalStateException;
+    
+    @Override
+    public PagedBusyHolder getHolderFor(Player p);
+    
+    /**
      * Sets the item at the given position.
      * 
      * @param naturalPage
@@ -30,8 +46,7 @@ public interface IPagedBusyMenu extends IBusyMenu
      *            The item
      * @return this
      */
-    public IPagedBusyMenu setItem(int naturalPage, int index,
-            BusyItem item);
+    public IPagedBusyMenu setItem(int naturalPage, int index, BusyItem item);
     
     /**
      * Forces this menu to apply its items on the specified page on an
@@ -41,8 +56,7 @@ public interface IPagedBusyMenu extends IBusyMenu
      * @see {@link IPagedBusyMenu#updateFor(Player, int)}
      * 
      * @param p
-     *            The Player used for
-     *            {@link BusyItem#getLookFor(Player)}
+     *            The Player used for {@link BusyItem#getLookFor(Player)}
      * @param inv
      *            The inventory
      * @param naturalPage
@@ -92,15 +106,18 @@ public interface IPagedBusyMenu extends IBusyMenu
     public IPagedBusyMenu openFor(Player p);
     
     /**
-     * Forces this menu to apply its items on the first page on an inventory. If
-     * you want to ensure the inventory was opened for a player, use
+     * Forces this menu to apply its items on an inventory. If this menu is open
+     * for a player, this method will call
+     * {@link IPagedBusyMenu#applyOn(Player, Inventory, int)} with the currently
+     * page as the page parameter. Otherwise it will use {@code 1} as the page
+     * parameter.<br/>
+     * If you want to ensure the inventory has been opened for a player, use
      * {@link IPagedBusyMenu#updateFor(Player)}.
      * 
      * @see {@link IPagedBusyMenu#updateFor(Player)}
      * 
      * @param p
-     *            The Player used for
-     *            {@link BusyItem#getLookFor(Player)}
+     *            The Player used for {@link BusyItem#getLookFor(Player)}
      * @param inv
      *            The inventory
      * @return this
