@@ -2,7 +2,7 @@ package io.github.Cnly.BusyInv.BusyInv.menus.apis;
 
 import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.apis.IParented;
-import io.github.Cnly.BusyInv.BusyInv.items.AbstractBusyItem;
+import io.github.Cnly.BusyInv.BusyInv.items.BusyItem;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -25,7 +25,7 @@ public interface IBusyMenu extends IOpenable, IParented
      *            The item
      * @return this
      */
-    public IBusyMenu setItem(int index, AbstractBusyItem item);
+    public IBusyMenu setItem(int index, BusyItem item);
     
     /**
      * Forces this menu to apply its items on an inventory. If you want to
@@ -36,7 +36,7 @@ public interface IBusyMenu extends IOpenable, IParented
      * 
      * @param p
      *            The Player used for
-     *            {@link AbstractBusyItem#getLookFor(Player)}
+     *            {@link BusyItem#getLookFor(Player)}
      * @param inv
      *            The inventory
      * @return this
@@ -66,7 +66,7 @@ public interface IBusyMenu extends IOpenable, IParented
      *            The item
      * @return this
      */
-    public IBusyMenu fillEmptySlots(AbstractBusyItem item);
+    public IBusyMenu fillEmptySlots(BusyItem item);
     
     @Override
     public IBusyMenu openFor(Player p);

@@ -2,7 +2,7 @@ package io.github.Cnly.BusyInv.BusyInv.menus;
 
 import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.holders.BusyHolder;
-import io.github.Cnly.BusyInv.BusyInv.items.AbstractBusyItem;
+import io.github.Cnly.BusyInv.BusyInv.items.BusyItem;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -44,7 +44,7 @@ public class ChestMenu extends BusyMenu
      * @return itself
      */
     public ChestMenu naturalSet(int naturalRow, int naturalColumn,
-            AbstractBusyItem item)
+            BusyItem item)
     {
         
         int rawSlot = ((naturalRow - 1) * 9 + naturalColumn) - 1;

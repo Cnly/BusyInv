@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public abstract class AbstractBusyItem
+public class BusyItem
 {
     
     protected ItemStack look;
@@ -29,7 +29,7 @@ public abstract class AbstractBusyItem
      *            The lore of the icon. Will use the icon's lore when this is
      *            null.
      */
-    public AbstractBusyItem(String displayName, ItemStack icon, String... lores)
+    public BusyItem(String displayName, ItemStack icon, String... lores)
     {
         
         this.look = icon.clone();
@@ -57,17 +57,19 @@ public abstract class AbstractBusyItem
         
     }
     
-    public AbstractBusyItem(String displayName, ItemStack icon)
+    public BusyItem(String displayName, ItemStack icon)
     {
         this(displayName, icon, (String[])null);
     }
     
-    public AbstractBusyItem(ItemStack look)
+    public BusyItem(ItemStack look)
     {
         this.look = look.clone();
     }
     
-    public abstract void onClick(ItemClickEvent e);
+    public void onClick(ItemClickEvent e)
+    {
+    }
     
     public ItemStack getLookFor(Player p)
     {
@@ -97,7 +99,7 @@ public abstract class AbstractBusyItem
      *            The lore to add
      * @return this
      */
-    public AbstractBusyItem addLore(String lore)
+    public BusyItem addLore(String lore)
     {
         ItemUtils.addLore(this.look, ChatColor.RESET + lore);
         return this;
@@ -111,7 +113,7 @@ public abstract class AbstractBusyItem
      *            The lore to set
      * @return this
      */
-    public AbstractBusyItem setLores(List<String> lores)
+    public BusyItem setLores(List<String> lores)
     {
         ItemUtils.setLores(this.look, lores);
         return this;
@@ -130,19 +132,19 @@ public abstract class AbstractBusyItem
      *            The display name to set
      * @return this
      */
-    public AbstractBusyItem setDisplayName(String displayName)
+    public BusyItem setDisplayName(String displayName)
     {
         ItemUtils.setDisplayName(this.look, ChatColor.RESET + displayName);
         return this;
     }
     
-    public AbstractBusyItem setLook(ItemStack look)
+    public BusyItem setLook(ItemStack look)
     {
         this.look = look.clone();
         return this;
     }
     
-    public AbstractBusyItem setIcon(ItemStack icon)
+    public BusyItem setIcon(ItemStack icon)
     {
         
         ItemStack tmp = icon.clone();

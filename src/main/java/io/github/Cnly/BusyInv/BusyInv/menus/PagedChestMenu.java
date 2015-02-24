@@ -10,7 +10,7 @@ import org.bukkit.inventory.InventoryView;
 import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
 import io.github.Cnly.BusyInv.BusyInv.holders.PagedBusyHolder;
-import io.github.Cnly.BusyInv.BusyInv.items.AbstractBusyItem;
+import io.github.Cnly.BusyInv.BusyInv.items.BusyItem;
 import io.github.Cnly.BusyInv.BusyInv.menus.apis.IBusyMenu;
 import io.github.Cnly.BusyInv.BusyInv.menus.apis.IPagedBusyMenu;
 
@@ -39,7 +39,7 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
     }
     
     public PagedChestMenu naturalSet(int naturalPage, int naturalRow,
-            int naturalColumn, AbstractBusyItem item)
+            int naturalColumn, BusyItem item)
     {
         return (PagedChestMenu)super.naturalSet(
                 ((naturalPage - 1) * perPageLineCount) + naturalRow,
@@ -59,7 +59,7 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
             return;
         int itemSlot = ((currentNaturalPage - 1) * this.perPageSize)
                 + rawSlot;
-        AbstractBusyItem bi = this.items[itemSlot];
+        BusyItem bi = this.items[itemSlot];
         if(null == bi)
             return;
         ItemClickEvent ice = new ItemClickEvent(p, this, e.getClick(),
@@ -97,7 +97,7 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
     
     @Override
     public PagedChestMenu setItem(int naturalPage, int index,
-            AbstractBusyItem item)
+            BusyItem item)
     {
         this.setItem(getItemStart(naturalPage) + index, item);
         return this;
@@ -136,7 +136,7 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
         int invIndex = 0;
         for(int i = itemStart; i < itemEnd; i++)
         {
-            AbstractBusyItem bi = this.items[i];
+            BusyItem bi = this.items[i];
             if(null != bi)
                 inv.setItem(invIndex, bi.getLookFor(p));
             else
@@ -154,7 +154,7 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
     }
     
     @Override
-    public PagedChestMenu fillEmptySlots(int naturalPage, AbstractBusyItem item)
+    public PagedChestMenu fillEmptySlots(int naturalPage, BusyItem item)
     {
         int itemStart = this.getItemStart(naturalPage);
         int itemEnd = itemStart + this.perPageSize;

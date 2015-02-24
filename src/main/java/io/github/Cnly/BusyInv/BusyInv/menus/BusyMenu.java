@@ -4,8 +4,7 @@ import io.github.Cnly.BusyInv.BusyInv.BusyInv;
 import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
 import io.github.Cnly.BusyInv.BusyInv.holders.BusyHolder;
-import io.github.Cnly.BusyInv.BusyInv.items.AbstractBusyItem;
-import io.github.Cnly.BusyInv.BusyInv.items.NonFunctionalItem;
+import io.github.Cnly.BusyInv.BusyInv.items.BusyItem;
 import io.github.Cnly.BusyInv.BusyInv.menus.apis.IBusyMenu;
 
 import org.bukkit.Bukkit;
@@ -25,7 +24,7 @@ public class BusyMenu implements IBusyMenu
 {
     
     @SuppressWarnings("deprecation")
-    protected AbstractBusyItem emptyItem = new NonFunctionalItem(new ItemStack(
+    protected BusyItem emptyItem = new BusyItem(new ItemStack(
             Material.STAINED_GLASS_PANE, 1, DyeColor.GRAY.getData()))
             .setDisplayName("");
     
@@ -33,7 +32,7 @@ public class BusyMenu implements IBusyMenu
     protected String title;
     protected IOpenable parent;
     protected int size;
-    protected AbstractBusyItem[] items;
+    protected BusyItem[] items;
     
     /**
      * This constructor uses
@@ -57,7 +56,7 @@ public class BusyMenu implements IBusyMenu
         this.title = title;
         this.parent = parent;
         this.size = inventoryType.getDefaultSize();
-        this.items = new AbstractBusyItem[this.size];
+        this.items = new BusyItem[this.size];
     }
     
     /**
@@ -80,7 +79,7 @@ public class BusyMenu implements IBusyMenu
         this.title = title;
         this.parent = parent;
         this.size = size;
-        this.items = new AbstractBusyItem[this.size];
+        this.items = new BusyItem[this.size];
     }
     
     @Override
@@ -93,7 +92,7 @@ public class BusyMenu implements IBusyMenu
         if(rawSlot < 0 || rawSlot >= this.size)
             return;
         
-        AbstractBusyItem bi = this.items[rawSlot];
+        BusyItem bi = this.items[rawSlot];
         if(null == bi)
             return;
         ItemClickEvent ice = new ItemClickEvent(p, this, e.getClick(),
@@ -136,7 +135,7 @@ public class BusyMenu implements IBusyMenu
     }
     
     @Override
-    public BusyMenu setItem(int index, AbstractBusyItem item)
+    public BusyMenu setItem(int index, BusyItem item)
     {
         if(index > this.size - 1)
             throw new IllegalArgumentException(String.format(
@@ -161,7 +160,7 @@ public class BusyMenu implements IBusyMenu
     {
         for(int i = 0; i < this.size; i++)
         {
-            AbstractBusyItem bi = this.items[i];
+            BusyItem bi = this.items[i];
             
             if(null != bi)
                 inv.setItem(i, bi.getLookFor(p));
@@ -172,7 +171,7 @@ public class BusyMenu implements IBusyMenu
     }
     
     @Override
-    public BusyMenu fillEmptySlots(AbstractBusyItem item)
+    public BusyMenu fillEmptySlots(BusyItem item)
     {
         for(int i = 0; i < this.size; i++)
             if(null == this.items[i])
@@ -217,18 +216,11 @@ public class BusyMenu implements IBusyMenu
     @Override
     public boolean updateFor(Player p)
     {
-        InventoryView iview = p.getOpenInventory();
-        if(null == iview)
+        if(!this.isOpenFor(p))
             return false;
-        Inventory inv = iview.getTopInventory();
-        if(null == inv)
-            return false;
-        InventoryHolder holder = inv.getHolder();
-        if(!(holder instanceof BusyHolder))
-            return false;
+        Inventory inv = p.getOpenInventory().getTopInventory();
+        BusyHolder holder = (BusyHolder)inv.getHolder();
         IBusyMenu menu = ((BusyHolder)holder).getMenu();
-        if(!menu.equals(this))
-            return false;
         menu.applyOn(p, inv);
         p.updateInventory();
         return true;
@@ -294,12 +286,12 @@ public class BusyMenu implements IBusyMenu
         return this;
     }
     
-    public AbstractBusyItem[] getItems()
+    public BusyItem[] getItems()
     {
         return items;
     }
     
-    public BusyMenu setItems(AbstractBusyItem[] items)
+    public BusyMenu setItems(BusyItem[] items)
     {
         if(items.length != this.size)
             throw new IllegalArgumentException("items.length != this.size");

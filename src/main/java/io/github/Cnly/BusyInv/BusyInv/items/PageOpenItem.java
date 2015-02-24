@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
 import io.github.Cnly.BusyInv.BusyInv.menus.apis.IPagedBusyMenu;
 
-public class PageOpenItem extends AbstractBusyItem
+public class PageOpenItem extends BusyItem
 {
     
     protected int newPage;

@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
 import io.github.Cnly.BusyInv.BusyInv.menus.apis.IBusyMenu;
 
-public class MenuOpenItem extends AbstractBusyItem
+public class MenuOpenItem extends BusyItem
 {
     
     private IBusyMenu newMenu;

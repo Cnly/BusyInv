@@ -4,7 +4,7 @@ import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
 
 import org.bukkit.inventory.ItemStack;
 
-public class BackItem extends AbstractBusyItem
+public class BackItem extends BusyItem
 {
 
     public BackItem(ItemStack look)

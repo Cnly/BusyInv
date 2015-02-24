@@ -1,6 +1,6 @@
 package io.github.Cnly.BusyInv.BusyInv.menus.apis;
 
-import io.github.Cnly.BusyInv.BusyInv.items.AbstractBusyItem;
+import io.github.Cnly.BusyInv.BusyInv.items.BusyItem;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -31,7 +31,7 @@ public interface IPagedBusyMenu extends IBusyMenu
      * @return this
      */
     public IPagedBusyMenu setItem(int naturalPage, int index,
-            AbstractBusyItem item);
+            BusyItem item);
     
     /**
      * Forces this menu to apply its items on the specified page on an
@@ -42,7 +42,7 @@ public interface IPagedBusyMenu extends IBusyMenu
      * 
      * @param p
      *            The Player used for
-     *            {@link AbstractBusyItem#getLookFor(Player)}
+     *            {@link BusyItem#getLookFor(Player)}
      * @param inv
      *            The inventory
      * @param naturalPage
@@ -79,7 +79,7 @@ public interface IPagedBusyMenu extends IBusyMenu
      *            The item
      * @return this
      */
-    public IPagedBusyMenu fillEmptySlots(int naturalPage, AbstractBusyItem item);
+    public IPagedBusyMenu fillEmptySlots(int naturalPage, BusyItem item);
     
     /**
      * Opens the first page of this menu for a player.
@@ -100,7 +100,7 @@ public interface IPagedBusyMenu extends IBusyMenu
      * 
      * @param p
      *            The Player used for
-     *            {@link AbstractBusyItem#getLookFor(Player)}
+     *            {@link BusyItem#getLookFor(Player)}
      * @param inv
      *            The inventory
      * @return this
