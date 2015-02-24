@@ -74,7 +74,7 @@ public class ChestMenu extends BusyMenu
             return value;
         }
         
-        public static ChestSize nearest(int size)
+        public static ChestSize fit(int size)
         {
             if(size <= 9)
                 return ONE_LINE;
