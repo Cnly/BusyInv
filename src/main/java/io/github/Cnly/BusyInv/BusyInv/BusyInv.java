@@ -27,6 +27,11 @@ public class BusyInv extends JavaPlugin
         HandlerList.unregisterAll(this);
     }
     
+    public static void registerFor(JavaPlugin jp)
+    {
+        Bukkit.getPluginManager().registerEvents(new BusyListener(), jp);
+    }
+    
     public static BusyInv getInstance()
     {
         return instance;
