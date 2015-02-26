@@ -40,4 +40,4 @@ If you choose to pack it into your jar, a relocation for this lib is strongly re
 
 And don't forget to call `BusyInv.registerFor(JavaPlugin);` in `onEnable()` or somewhere else if you are going to pack it!
 
-Some ideas were from [AmpMenus](https://github.com/ampayne2/AmpMenus).
+Some ideas in this project were from [AmpMenus](https://github.com/ampayne2/AmpMenus).
