@@ -18,6 +18,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class BusyMenu implements IBusyMenu
@@ -285,7 +286,21 @@ public class BusyMenu implements IBusyMenu
         return this;
     }
     
+    /**
+     * Runs a task to close the inventory safely.<br/>
+     * This method should be overridden with:<br/>
+     * {@code this.closeInventorySafely(YourPluginInstance, p)}<br/>
+     * when BusyInv is not a standalone plugin!
+     * 
+     * @param p
+     *            The player
+     */
     protected void closeInventorySafely(final Player p)
+    {
+        this.closeInventorySafely(BusyInv.getInstance(), p);
+    }
+    
+    protected void closeInventorySafely(JavaPlugin jp, final Player p)
     {
         new BukkitRunnable()
         {
@@ -294,7 +309,7 @@ public class BusyMenu implements IBusyMenu
             {
                 p.closeInventory();
             }
-        }.runTask(BusyInv.getInstance());
+        }.runTask(jp);
     }
     
     /**
