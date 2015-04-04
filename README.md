@@ -1,4 +1,4 @@
-# BusyInv
+# BusyInv [![Circle CI](https://circleci.com/gh/Cnly/BusyInv.svg?style=svg)](https://circleci.com/gh/Cnly/BusyInv)
 
 An Inventory GUI lib for Bukkit. `Still in development. API may change frequently.`
 
