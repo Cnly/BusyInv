@@ -13,9 +13,6 @@
 
 	<repositories>
 		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
 			<id>spigotRepo</id>
 			<name>Spigot Repo</name>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
