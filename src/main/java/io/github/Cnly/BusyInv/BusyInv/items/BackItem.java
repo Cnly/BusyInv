@@ -25,7 +25,8 @@ public class BackItem extends BusyItem
     @Override
     public void onClick(ItemClickEvent e)
     {
-        
+        e.setOpenParent(true);
+        e.setCloseOnNoParent(true);
     }
     
 }
