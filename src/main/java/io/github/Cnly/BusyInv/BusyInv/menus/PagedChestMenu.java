@@ -45,6 +45,13 @@ public class PagedChestMenu extends ChestMenu implements IPagedBusyMenu
                 naturalColumn, item);
     }
     
+    public BusyItem naturalGet(int naturalPage, int naturalRow,
+            int naturalColumn)
+    {
+        return super.naturalGet(((naturalPage - 1) * perPageLineCount)
+                + naturalRow, naturalColumn);
+    }
+    
     @Override
     public int getOpenPageFor(Player p) throws IllegalStateException
     {

@@ -46,10 +46,17 @@ public class ChestMenu extends BusyMenu
     public ChestMenu naturalSet(int naturalRow, int naturalColumn,
             BusyItem item)
     {
-        
-        int rawSlot = ((naturalRow - 1) * 9 + naturalColumn) - 1;
-        
-        return (ChestMenu)this.setItem(rawSlot, item);
+        return (ChestMenu)this.setItem(this.getRawSlot(naturalRow, naturalColumn), item);
+    }
+    
+    public BusyItem naturalGet(int naturalRow, int naturalColumn)
+    {
+        return this.getItems()[this.getRawSlot(naturalRow, naturalColumn)];
+    }
+    
+    protected int getRawSlot(int naturalRow, int naturalColumn)
+    {
+        return ((naturalRow - 1) * 9 + naturalColumn) - 1;
     }
     
     public static enum ChestSize
