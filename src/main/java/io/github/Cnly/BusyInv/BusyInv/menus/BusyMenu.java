@@ -8,8 +8,6 @@ import io.github.Cnly.BusyInv.BusyInv.items.BusyItem;
 import io.github.Cnly.BusyInv.BusyInv.menus.apis.IBusyMenu;
 
 import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -17,17 +15,17 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class BusyMenu implements IBusyMenu
 {
     
-    @SuppressWarnings("deprecation")
-    protected BusyItem emptyItem = new BusyItem(new ItemStack(
-            Material.STAINED_GLASS_PANE, 1, DyeColor.GRAY.getData()))
-            .setDisplayName("");
+    /**
+     * The default placeholder item. For compatibility, this is null by default.
+     * If you need to use it, you can set it manually.
+     */
+    protected BusyItem emptyItem = null;
     
     protected InventoryType inventoryType;
     protected String title;
